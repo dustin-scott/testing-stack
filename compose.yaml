@@ -3,9 +3,9 @@ services:
     image: nginx:latest # Using the default Nginx image with custom configuration.
     volumes:
       # Mount the application code for live updates
-      - ./:/var/www
+      - ./game-backlog:/var/www
       # Mount the Nginx configuration file
-      - ./docker/development/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./game-backlog/docker/development/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       # Map port 80 inside the container to the port specified by 'NGINX_PORT' on the host machine
       - "80:80"
@@ -20,7 +20,7 @@ services:
   php-fpm:
     # For the php-fpm service, we will use our common PHP-FPM Dockerfile with the development target
     build:
-      context: .
+      context: ./game-backlog/
       dockerfile: ./docker/common/php-fpm/Dockerfile
       target: development
       args:
@@ -34,11 +34,11 @@ services:
         XDEBUG_LOG_LEVEL: 0
     env_file:
       # Load the environment variables from the Laravel application
-      - .env
+      - ./game-backlog/.env
     user: "${UID:-1000}:${GID:-1000}"
     volumes:
       # Mount the application code for live updates
-      - ./:/var/www
+      - ./game-backlog/:/var/www
     networks:
       - laravel-development
     depends_on:
@@ -49,7 +49,7 @@ services:
     # For the workspace service, we will also create a custom image to install and setup all the necessary stuff.
     build:
       context: .
-      dockerfile: ./docker/development/workspace/Dockerfile
+      dockerfile: ./game-backlog/docker/development/workspace/Dockerfile
       args:
         UID: ${UID:-1000}
         GID: ${GID:-1000}
@@ -62,9 +62,9 @@ services:
     tty: true # Enables an interactive terminal
     stdin_open: true # Keeps standard input open for 'docker exec'
     env_file:
-      - .env
+      - ./game-backlog/.env
     volumes:
-      - ./:/var/www
+      - ./game-backlog/:/var/www
     networks:
       - laravel-development
 
@@ -85,6 +85,18 @@ services:
     networks:
       - laravel-development
 
+  java:
+    build:
+      context: ./
+      dockerfile: ./Interview-project/docker/Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    volumes:
+      - ./Interview-project:/usr/src/app
+    networks:
+      - laravel-development
+      
 networks:
   laravel-development:
 

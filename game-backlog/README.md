@@ -1,19 +1,6 @@
 # game-backlog
 A testing project with a backend and a frontend, in docker.
 
-
-1. Create `.env` with `cp .env.example .env`
-2. Start `docker compose up -d`
-3. Install Laravel Dependencies:
-    ```
-    docker compose exec workspace bash
-    composer install
-    npm install
-    npm run dev
-    ```
-4. Run Migrations: `docker compose exec workspace php artisan` migrate
-5. Access the Application: Open your browser and navigate to http://localhost.
-
 ## Usage
 
 Here are some common commands and tips for using the development environment:
