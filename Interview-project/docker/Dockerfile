@@ -16,4 +16,5 @@ RUN apk upgrade && \
         vimdiff && \
     rm -rf /var/cache/apk/*
 
-SHELL ["/bin/bash", "-c"]
+# Default command to keep the container running
+CMD ["bash"]
