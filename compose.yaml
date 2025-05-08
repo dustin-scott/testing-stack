@@ -92,6 +92,8 @@ services:
       args:
         UID: ${UID:-1000}
         GID: ${GID:-1000}
+    tty: true # Enables an interactive terminal
+    stdin_open: true # Keeps standard input open for 'docker exec'
     volumes:
       - ./Interview-project:/usr/src/app
     networks:
