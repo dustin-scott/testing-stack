@@ -1,5 +1,5 @@
 # game-backlog
-A testing project with a backend and a fronend, in docker.
+A testing project with a backend and a frontend, in docker.
 
 
 #Start
