@@ -88,14 +88,14 @@ services:
   java:
     build:
       context: ./
-      dockerfile: ./Interview-project/docker/Dockerfile
+      dockerfile: ./automation/docker/Dockerfile
       args:
         UID: ${UID:-1000}
         GID: ${GID:-1000}
     tty: true # Enables an interactive terminal
     stdin_open: true # Keeps standard input open for 'docker exec'
     volumes:
-      - ./Interview-project:/usr/src/app
+      - ./automation:/usr/src/app
     networks:
       - laravel-development
       
