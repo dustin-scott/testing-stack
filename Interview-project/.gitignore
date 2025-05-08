@@ -1,0 +1,14 @@
+/.idea/
+/target/
+/test-output/
+/Logs/
+/backup_Logs/
+*.iml
+/.env
+.project
+.classpath
+/.settings/
+/test-output/
+/Screenshots/
+/extent-reports/
+/Punchout_XML/
