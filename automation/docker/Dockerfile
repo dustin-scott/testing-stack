@@ -1,5 +1,5 @@
 FROM alpine:latest
-COPY ./Interview-project /usr/src/app
+COPY ./automation /usr/src/app
 WORKDIR /usr/src/app
 
 RUN apk upgrade && \
