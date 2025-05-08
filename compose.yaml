@@ -61,6 +61,7 @@ services:
         XDEBUG_LOG_LEVEL: 0
     tty: true # Enables an interactive terminal
     stdin_open: true # Keeps standard input open for 'docker exec'
+    user: "${UID:-1000}:${GID:-1000}"
     env_file:
       - ./game-backlog/.env
     volumes:
