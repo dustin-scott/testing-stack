@@ -5,6 +5,7 @@ import { Head } from '@inertiajs/vue3';
 import PlaceholderPattern from '../components/PlaceholderPattern.vue';
 import { Icon } from '@iconify/vue'
 import { PaginationEllipsis, PaginationFirst, PaginationLast, PaginationList, PaginationListItem, PaginationNext, PaginationPrev, PaginationRoot } from 'reka-ui'
+import { computed, ref } from 'vue';
 
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -12,6 +13,23 @@ const breadcrumbs: BreadcrumbItem[] = [
         title: 'Dashboard',
         href: '/dashboard',
     },
+];
+
+const defaultPage = 1;
+const numberOfResults = 100;
+const itemsPerPage = 10;
+const currentPage = ref(1);
+const test = computed({
+    get: () => currentPage.value,
+    set: (value) => {
+        console.log(value);
+        currentPage.value = value;
+    }
+});
+const testData = [
+    {title: "test", "completed": false},
+    {title: "test2", "completed": false},
+    {title: "test3", "completed": true}
 ];
 </script>
 
@@ -35,12 +53,32 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <PlaceholderPattern />
             </div>
         </div>
+        <div>Page {{currentPage}}</div>
+      <table>
+          <thead>
+              <tr>
+                  <th>#</th>
+                  <th>
+                      Title
+                  </th>
+                  <th>Completed</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr v-for="(item, index) in testData" :key="item.title">
+                  <td>{{index + 1}}</td>
+                  <td>{{item.title}}</td>
+                  <td><input type="checkbox" value="1" :checked="item.completed"></td>
+              </tr>
+          </tbody>
+      </table>
       <PaginationRoot
-        :total="100"
+        :total="numberOfResults"
         :sibling-count="1"
-        :items-per-page="10"
+        :items-per-page="itemsPerPage"
         show-edges
-        :default-page="2"
+        :default-page="defaultPage"
+        v-model:page="currentPage"
       >
         <PaginationList
           v-slot="{ items }"
@@ -80,3 +118,8 @@ const breadcrumbs: BreadcrumbItem[] = [
       </PaginationRoot>
     </AppLayout>
 </template>
+<style scoped>
+    th {
+        text-align: left;
+    }
+</style
