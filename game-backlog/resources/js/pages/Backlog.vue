@@ -2,16 +2,16 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
-import PlaceholderPattern from '../components/PlaceholderPattern.vue';
 import { Icon } from '@iconify/vue'
 import { PaginationEllipsis, PaginationFirst, PaginationLast, PaginationList, PaginationListItem, PaginationNext, PaginationPrev, PaginationRoot } from 'reka-ui'
 import { computed, ref } from 'vue';
-
+import { Button } from '@/components/ui/button';
+import { Link, router } from '@inertiajs/vue3';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
-        href: '/dashboard',
+        title: 'Backlog',
+        href: '/backlog',
     },
 ];
 
@@ -27,48 +27,39 @@ const test = computed({
     }
 });
 const testData = [
-    {title: "test", "completed": false},
-    {title: "test2", "completed": false},
-    {title: "test3", "completed": true}
+    {id: 1, title: "test", "completed": false},
+    {id: 2, title: "test2", "completed": false},
+    {id: 3, title: "test3", "completed": true}
 ];
+const headers = Object.keys(testData[0]).map((value) => {
+    if(value.length < 2) {
+        return value.toUpperCase();
+    }
+    return value.charAt(0).toUpperCase() + value.slice(1);
+});
+const tableClasses = "gap-4 p-4 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border";
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Backlog" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-            <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-            </div>
-            <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border md:min-h-min">
-                <PlaceholderPattern />
-            </div>
-        </div>
+        <Button>Add To Backlog</Button>
+        <Link class="block w-full" :href="route('backlog.new')">
+            Add To Backlog
+        </Link>
         <div>Page {{currentPage}}</div>
       <table>
           <thead>
               <tr>
-                  <th>#</th>
-                  <th>
-                      Title
-                  </th>
-                  <th>Completed</th>
+                  <th :class="tableClasses" v-for="(header) in headers">{{header}}</th>
               </tr>
           </thead>
           <tbody>
               <tr v-for="(item, index) in testData" :key="item.title">
-                  <td>{{index + 1}}</td>
-                  <td>{{item.title}}</td>
-                  <td><input type="checkbox" value="1" :checked="item.completed"></td>
+                  <td :class="tableClasses">{{item.id}}</td>
+                  <td :class="tableClasses">{{item.title}}</td>
+                  <td :class="tableClasses"><input type="checkbox" value="1" :checked="item.completed"></td>
               </tr>
           </tbody>
       </table>
