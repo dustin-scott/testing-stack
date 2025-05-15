@@ -44,11 +44,9 @@ const tableClasses = "gap-4 p-4 rounded-xl border border-sidebar-border/70 dark:
     <Head title="Backlog" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-    <Button>
         <Link class="block w-full" :href="route('backlog.new')">
-            Add To Backlog
+            <Button class="block w-full">Add To Backlog</Button>
         </Link>
-    </Button>
         <div>Page {{currentPage}}</div>
       <table>
           <thead>
